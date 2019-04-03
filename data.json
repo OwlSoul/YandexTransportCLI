@@ -1,0 +1,1260 @@
+{
+  "data": {
+    "type": "Feature",
+    "geometries": [
+      {
+        "type": "Point",
+        "coordinates": [
+          37.438644748,
+          55.892046161
+        ]
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        37.438644748,
+        55.892046161
+      ]
+    },
+    "properties": {
+      "name": "Магазин Мелодия",
+      "description": "Магазин Мелодия",
+      "currentTime": "Wed Apr 03 2019 18:46:28 GMT+0300 (MSK)",
+      "StopMetaData": {
+        "id": "stop__9680781",
+        "name": "Магазин Мелодия",
+        "type": "urban",
+        "region": {
+          "id": 10758,
+          "ename": "himki",
+          "name": "himki",
+          "names": {
+            "ablative": "",
+            "accusative": "Химки",
+            "dative": "Химкам",
+            "directional": "",
+            "genitive": "Химок",
+            "instrumental": "Химками",
+            "locative": "",
+            "nominative": "Химки",
+            "preposition": "в",
+            "prepositional": "Химках"
+          }
+        },
+        "Transport": [
+          {
+            "id": "0a6fA_51_bus_default",
+            "lineId": "0a6f_51_bus_default",
+            "name": "51",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9650333",
+                "name": "Киностар"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554306493,
+                    "text": "18:48"
+                  },
+                  "vehicleId": "mosobl%5Fdta|543"
+                }
+              ],
+              "Frequency": {
+                "text": "10 мин",
+                "value": 600,
+                "begin": {
+                  "value": 1554262571,
+                  "text": "6:36"
+                },
+                "end": {
+                  "value": 1554319271,
+                  "text": "22:21"
+                }
+              }
+            }
+          },
+          {
+            "id": "2037280280",
+            "lineId": "2037269896",
+            "name": "5",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9683986",
+                "name": "Платформа Левобережная"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "20 мин",
+                "value": 1200,
+                "begin": {
+                  "value": 1554258820,
+                  "text": "5:33"
+                },
+                "end": {
+                  "value": 1554329020,
+                  "text": "1:03"
+                }
+              }
+            }
+          },
+          {
+            "id": "203A_trolleybus_default",
+            "lineId": "203_trolleybus_default",
+            "name": "203",
+            "Types": [
+              "trolleybus"
+            ],
+            "type": "trolleybus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688557",
+                "name": "Стадион Родина"
+              },
+              {
+                "id": "stop__9688557",
+                "name": "Стадион Родина"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "15 мин",
+                "value": 900,
+                "begin": {
+                  "value": 1554258949,
+                  "text": "5:35"
+                },
+                "end": {
+                  "value": 1554329149,
+                  "text": "1:05"
+                }
+              }
+            }
+          },
+          {
+            "id": "342A_bus_default",
+            "lineId": "342_bus_default",
+            "name": "342",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9689850",
+                "name": "Улица Павлова"
+              },
+              {
+                "id": "stop__9970253",
+                "name": "Метро Речной вокзал"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554306788,
+                    "text": "18:53"
+                  },
+                  "vehicleId": "213%5Fa37|4987122%5F3524%5FTRANSNAVI09"
+                }
+              ],
+              "Frequency": {
+                "text": "12 мин",
+                "value": 720,
+                "begin": {
+                  "value": 1554259646,
+                  "text": "5:47"
+                },
+                "end": {
+                  "value": 1554325706,
+                  "text": "0:08"
+                }
+              }
+            }
+          },
+          {
+            "id": "342B_minibus_default",
+            "lineId": "342_minibus_default",
+            "name": "342к",
+            "Types": [
+              "minibus"
+            ],
+            "type": "minibus",
+            "EssentialStops": [
+              {
+                "id": "stop__9691896",
+                "name": "Аллея Героев"
+              },
+              {
+                "id": "stop__9640270",
+                "name": "Метро Речной вокзал"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554306721,
+                    "text": "18:52"
+                  },
+                  "vehicleId": "khimki%5Fregionavto|301070"
+                }
+              ],
+              "Frequency": {
+                "text": "10 мин",
+                "value": 600,
+                "begin": {
+                  "value": 1554259421,
+                  "text": "5:43"
+                },
+                "end": {
+                  "value": 1554320621,
+                  "text": "22:43"
+                }
+              }
+            }
+          },
+          {
+            "id": "3803B_326_minibus_default",
+            "lineId": "3803_326_minibus_default",
+            "name": "326к",
+            "Types": [
+              "minibus"
+            ],
+            "type": "minibus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9714042",
+                "name": "Метро Тушинская"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "30 мин",
+                "value": 1800,
+                "begin": {
+                  "value": 1554260517,
+                  "text": "6:01"
+                },
+                "end": {
+                  "value": 1554314517,
+                  "text": "21:01"
+                }
+              }
+            }
+          },
+          {
+            "id": "3A_bus_default",
+            "lineId": "3_bus_default",
+            "name": "3",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__10007221",
+                "name": "Стадион"
+              },
+              {
+                "id": "stop__10007221",
+                "name": "Стадион"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554306756,
+                    "text": "18:52"
+                  },
+                  "vehicleId": "213%5Fa37|4987460%5F6053%5FTRANSNAVI09"
+                }
+              ],
+              "Frequency": {
+                "text": "5 мин",
+                "value": 300,
+                "begin": {
+                  "value": 1554263169,
+                  "text": "6:46"
+                },
+                "end": {
+                  "value": 1554314949,
+                  "text": "21:09"
+                }
+              }
+            }
+          },
+          {
+            "id": "3273560607",
+            "lineId": "436_bus_default",
+            "name": "436",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9677002",
+                "name": "Дом Правительства Московской области"
+              }
+            ],
+            "BriefSchedule": {}
+          },
+          {
+            "id": "469B_minibus_default",
+            "lineId": "469_minibus_default",
+            "name": "469",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "3227285387",
+                "name": "Метро Планерная"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "8 мин",
+                "value": 480,
+                "begin": {
+                  "value": 1554260517,
+                  "text": "6:01"
+                },
+                "end": {
+                  "value": 1554319917,
+                  "text": "22:31"
+                }
+              }
+            }
+          },
+          {
+            "id": "2086261044",
+            "lineId": "5dc4_26_bus_default",
+            "name": "26",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9650435",
+                "name": "Метро Волоколамская"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "45 мин",
+                "value": 2700,
+                "begin": {
+                  "value": 1554264760,
+                  "text": "7:12"
+                },
+                "end": {
+                  "value": 1554307120,
+                  "text": "18:58"
+                }
+              }
+            }
+          },
+          {
+            "id": "6d48A_28_bus_default",
+            "lineId": "6d48_28_bus_default",
+            "name": "28",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9674329",
+                "name": "Больница № 119"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554306597,
+                    "text": "18:49"
+                  },
+                  "vehicleId": "mosobl%5Fdta|897"
+                }
+              ],
+              "Frequency": {
+                "text": "45 мин",
+                "value": 2700,
+                "begin": {
+                  "value": 1554261940,
+                  "text": "6:25"
+                },
+                "end": {
+                  "value": 1554320380,
+                  "text": "22:39"
+                }
+              }
+            }
+          },
+          {
+            "id": "72d1A_30_bus_default",
+            "lineId": "72d1_30_bus_default",
+            "name": "30",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9685625",
+                "name": "Подрезково"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "30 мин",
+                "value": 1800,
+                "begin": {
+                  "value": 1554260538,
+                  "text": "6:02"
+                },
+                "end": {
+                  "value": 1554307278,
+                  "text": "19:01"
+                }
+              }
+            }
+          },
+          {
+            "id": "79ceA_19_minibus_default",
+            "lineId": "79ce_19_minibus_default",
+            "name": "19к",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9887315",
+                "name": "Мега – Ашан"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "10 мин",
+                "value": 600,
+                "begin": {
+                  "value": 1554261431,
+                  "text": "6:17"
+                },
+                "end": {
+                  "value": 1554322631,
+                  "text": "23:17"
+                }
+              }
+            }
+          },
+          {
+            "id": "8755A_1_trolleybus_default",
+            "lineId": "8755_1_trolleybus_default",
+            "name": "1",
+            "Types": [
+              "trolleybus"
+            ],
+            "type": "trolleybus",
+            "EssentialStops": [
+              {
+                "id": "2191159614",
+                "name": "Улица Дружбы"
+              },
+              {
+                "id": "stop__9690060",
+                "name": "Улица Дружбы"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554306600,
+                    "text": "18:50"
+                  },
+                  "vehicleId": "khimki|100047"
+                }
+              ],
+              "Frequency": {
+                "text": "5 мин",
+                "value": 300,
+                "begin": {
+                  "value": 1554259793,
+                  "text": "5:49"
+                },
+                "end": {
+                  "value": 1554329993,
+                  "text": "1:19"
+                }
+              }
+            }
+          },
+          {
+            "id": "937A_minibus_default",
+            "lineId": "937_minibus_default",
+            "name": "937к",
+            "Types": [
+              "minibus"
+            ],
+            "type": "minibus",
+            "EssentialStops": [
+              {
+                "id": "stop__9683986",
+                "name": "Платформа Левобережная"
+              },
+              {
+                "id": "stop__9887315",
+                "name": "Мега – Ашан"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554307224,
+                    "text": "19:00"
+                  },
+                  "vehicleId": "khimki%5Fregionavto|431161"
+                }
+              ],
+              "Frequency": {
+                "text": "25 мин",
+                "value": 1500,
+                "begin": {
+                  "value": 1554264371,
+                  "text": "7:06"
+                },
+                "end": {
+                  "value": 1554324071,
+                  "text": "23:41"
+                }
+              }
+            }
+          },
+          {
+            "id": "962dA_42_bus_default",
+            "lineId": "962d_42_bus_default",
+            "name": "42",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9684064",
+                "name": "Новогорск - Плотина"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "45 мин",
+                "value": 2700,
+                "begin": {
+                  "value": 1554264220,
+                  "text": "7:03"
+                },
+                "end": {
+                  "value": 1554314020,
+                  "text": "20:53"
+                }
+              }
+            }
+          },
+          {
+            "id": "971B_minibus_default",
+            "lineId": "971_minibus_default",
+            "name": "971к",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "2136302038",
+                "name": "Озёрная улица"
+              },
+              {
+                "id": "stop__9647339",
+                "name": "Метро Сходненская"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554306722,
+                    "text": "18:52"
+                  },
+                  "vehicleId": "khimki%5Fregionavto|300190"
+                },
+                {
+                  "Estimated": {
+                    "value": 1554307606,
+                    "text": "19:06"
+                  },
+                  "vehicleId": "khimki%5Fregionavto|301545"
+                }
+              ],
+              "Frequency": {
+                "text": "15 мин",
+                "value": 900,
+                "begin": {
+                  "value": 1554262716,
+                  "text": "6:38"
+                },
+                "end": {
+                  "value": 1554319116,
+                  "text": "22:18"
+                }
+              }
+            }
+          },
+          {
+            "id": "c812A_1_bus_default",
+            "lineId": "c812_1_bus_default",
+            "name": "1",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9688783",
+                "name": "Станция Химки"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Estimated": {
+                    "value": 1554306370,
+                    "text": "18:46"
+                  },
+                  "vehicleId": "213%5Fa37|4987190%5F2520%5FTRANSNAVI09"
+                }
+              ],
+              "Frequency": {
+                "text": "15 мин",
+                "value": 900,
+                "begin": {
+                  "value": 1554260538,
+                  "text": "6:02"
+                },
+                "end": {
+                  "value": 1554323538,
+                  "text": "23:32"
+                }
+              }
+            }
+          },
+          {
+            "id": "cc63V_22_bus_default",
+            "lineId": "cc63_22_bus_default",
+            "name": "22",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9981378",
+                "name": "Микрорайон Велтон парк"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "45 мин",
+                "value": 2700,
+                "begin": {
+                  "value": 1554259518,
+                  "text": "5:45"
+                },
+                "end": {
+                  "value": 1554321798,
+                  "text": "23:03"
+                }
+              }
+            }
+          },
+          {
+            "id": "d941A_4_minibus_default",
+            "lineId": "d941_4_minibus_default",
+            "name": "4",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9689850",
+                "name": "Улица Павлова"
+              },
+              {
+                "id": "stop__9887315",
+                "name": "Мега – Ашан"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "20 мин",
+                "value": 1200,
+                "begin": {
+                  "value": 1554270072,
+                  "text": "8:41"
+                },
+                "end": {
+                  "value": 1554312072,
+                  "text": "20:21"
+                }
+              }
+            }
+          },
+          {
+            "id": "e68dA_43_bus_default",
+            "lineId": "e68d_43_bus_default",
+            "name": "43",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9688784",
+                "name": "Станция Химки"
+              },
+              {
+                "id": "stop__9678130",
+                "name": "Ивакино"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "6 ч",
+                "value": 21600,
+                "begin": {
+                  "value": 1554308320,
+                  "text": "19:18"
+                },
+                "end": {
+                  "value": 1554308380,
+                  "text": "19:19"
+                }
+              }
+            }
+          },
+          {
+            "id": "f5beA_10_minibus_default",
+            "lineId": "f5be_10_minibus_default",
+            "name": "10",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9695233",
+                "name": "Улица Мичурина"
+              },
+              {
+                "id": "stop__9887315",
+                "name": "Мега – Ашан"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "15 мин",
+                "value": 900,
+                "begin": {
+                  "value": 1554263749,
+                  "text": "6:55"
+                },
+                "end": {
+                  "value": 1554309229,
+                  "text": "19:33"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "toponymSearchResponse": {
+      "requestId": "1554306388847271-499452150-sas1-6186",
+      "requestSerpId": "1554306388847271-499452150-sas1-6186",
+      "requestContext": "ZAAAAAgAEAAaKAoSCQAAAAAAkHZAEQAAAAAAoGZAEhIJAAAAAAAA8L8RAAAAAAAA8L8iAQAoCjAAOIOS+5eV6YixU0D+//////////8BSAFVAACAv1j///////////8BYhJkaXJlY3RfcGFnZV9pZD0yNDJqAHAAnQHNzMw9oAEAqAEA",
+      "requestQuery": "55.892046,37.438645",
+      "requestCorrectedQuery": "55.892046,37.438645",
+      "requestPoint": {
+        "type": "Point",
+        "coordinates": [
+          37.438645,
+          55.892046
+        ]
+      },
+      "requestBounds": [
+        [
+          37.04842675,
+          55.43644829
+        ],
+        [
+          38.17590226,
+          56.04690124
+        ]
+      ],
+      "displayType": "single",
+      "totalResultCount": 7,
+      "items": [
+        {
+          "requestId": "1554306388847271-499452150-sas1-6186",
+          "title": "улица Маяковского, 20",
+          "description": "Химки, Московская область, Россия",
+          "address": "Россия, Московская область, Химки, улица Маяковского, 20",
+          "coordinates": [
+            37.438682,
+            55.892158
+          ],
+          "bounds": [
+            [
+              37.434577,
+              55.889851
+            ],
+            [
+              37.442787,
+              55.894465
+            ]
+          ],
+          "displayCoordinates": [
+            37.438645,
+            55.892046
+          ],
+          "type": "toponym",
+          "id": "56801372",
+          "kind": "house",
+          "postalCode": "141402",
+          "seoname": "ulitsa_mayakovskogo_20",
+          "geoId": 10758,
+          "uri": "ymapsbm1://geo?ll=37.439%2C55.892&spn=0.001%2C0.001&text=%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F%2C%20%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20%D0%A5%D0%B8%D0%BC%D0%BA%D0%B8%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9C%D0%B0%D1%8F%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%2020",
+          "entrances": [
+            {
+              "name": "1",
+              "coordinates": [
+                37.43905,
+                55.89238
+              ],
+              "azimuth": 325,
+              "tilt": 0
+            },
+            {
+              "name": "2",
+              "coordinates": [
+                37.438826,
+                55.892289
+              ],
+              "azimuth": 325,
+              "tilt": 0
+            },
+            {
+              "name": "3",
+              "coordinates": [
+                37.438592,
+                55.892198
+              ],
+              "azimuth": 325,
+              "tilt": 0
+            },
+            {
+              "name": "4",
+              "coordinates": [
+                37.438367,
+                55.892112
+              ],
+              "azimuth": 325,
+              "tilt": 0
+            },
+            {
+              "name": "5",
+              "coordinates": [
+                37.438143,
+                55.892021
+              ],
+              "azimuth": 325,
+              "tilt": 0
+            }
+          ],
+          "metro": [
+            {
+              "id": "2135150818",
+              "name": "Ховрино",
+              "distance": "3,1 км",
+              "coordinates": [
+                37.480773532,
+                55.878274513
+              ],
+              "type": "metro",
+              "color": "#0a6f20"
+            },
+            {
+              "id": "station__9858882",
+              "name": "Планерная",
+              "distance": "3,5 км",
+              "coordinates": [
+                37.436405811,
+                55.8609271
+              ],
+              "type": "metro",
+              "color": "#92007b"
+            },
+            {
+              "id": "3335468575",
+              "name": "Беломорская",
+              "distance": "3,8 км",
+              "coordinates": [
+                37.475693345,
+                55.865372738
+              ],
+              "type": "metro",
+              "color": "#0a6f20"
+            }
+          ],
+          "stops": [
+            {
+              "id": "stop__9680781",
+              "name": "Магазин Мелодия",
+              "distance": "12 м",
+              "coordinates": [
+                37.438644748,
+                55.892046161
+              ],
+              "type": "common"
+            },
+            {
+              "id": "stop__9683525",
+              "name": "Первомайская улица",
+              "distance": "290 м",
+              "coordinates": [
+                37.442629505,
+                55.893440339
+              ],
+              "type": "common"
+            },
+            {
+              "id": "stop__9648465",
+              "name": "Улица Маяковского",
+              "distance": "360 м",
+              "coordinates": [
+                37.435683202,
+                55.889426391
+              ],
+              "type": "common"
+            },
+            {
+              "id": "stop__9673502",
+              "name": "Аптека",
+              "distance": "480 м",
+              "coordinates": [
+                37.446165,
+                55.891031
+              ],
+              "type": "common"
+            },
+            {
+              "id": "stop__9648467",
+              "name": "Нагорное шоссе",
+              "distance": "580 м",
+              "coordinates": [
+                37.429956905,
+                55.893981229
+              ],
+              "type": "common"
+            }
+          ],
+          "photos": {
+            "count": 3,
+            "urlTemplate": "https://avatars.mds.yandex.net/get-ugc/786911/2a0000015f57ad283353bc5f7ade57fc272a/%s",
+            "items": [
+              {
+                "urlTemplate": "https://avatars.mds.yandex.net/get-ugc/786911/2a0000015f57ad283353bc5f7ade57fc272a/%s"
+              },
+              {
+                "urlTemplate": "https://avatars.mds.yandex.net/get-ugc/786911/2a0000015f57c296975ec003c0e32d6140f2/%s"
+              },
+              {
+                "urlTemplate": "https://avatars.mds.yandex.net/get-ugc/786911/2a0000015f57e62efa25b85ac68cc06794b6/%s"
+              }
+            ],
+            "panoramas": []
+          },
+          "logId": "dHlwZT1nZW9jb2RlcjthZGRyZXNzPdCg0L7RgdGB0LjRjywg0JzQvtGB0LrQvtCy0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwsINCl0LjQvNC60LgsINGD0LvQuNGG0LAg0JzQsNGP0LrQvtCy0YHQutC+0LPQviwgMjAvMzcuNDM4NjgyLDU1Ljg5MjE1OC8x",
+          "sources": [],
+          "analyticsId": "1"
+        }
+      ],
+      "exactResult": {
+        "requestId": "1554306388847271-499452150-sas1-6186",
+        "title": "улица Маяковского, 20",
+        "description": "Химки, Московская область, Россия",
+        "address": "Россия, Московская область, Химки, улица Маяковского, 20",
+        "coordinates": [
+          37.438682,
+          55.892158
+        ],
+        "bounds": [
+          [
+            37.434577,
+            55.889851
+          ],
+          [
+            37.442787,
+            55.894465
+          ]
+        ],
+        "displayCoordinates": [
+          37.438645,
+          55.892046
+        ],
+        "type": "toponym",
+        "id": "56801372",
+        "kind": "house",
+        "postalCode": "141402",
+        "seoname": "ulitsa_mayakovskogo_20",
+        "geoId": 10758,
+        "uri": "ymapsbm1://geo?ll=37.439%2C55.892&spn=0.001%2C0.001&text=%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F%2C%20%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20%D0%A5%D0%B8%D0%BC%D0%BA%D0%B8%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9C%D0%B0%D1%8F%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%2020",
+        "entrances": [
+          {
+            "name": "1",
+            "coordinates": [
+              37.43905,
+              55.89238
+            ],
+            "azimuth": 325,
+            "tilt": 0
+          },
+          {
+            "name": "2",
+            "coordinates": [
+              37.438826,
+              55.892289
+            ],
+            "azimuth": 325,
+            "tilt": 0
+          },
+          {
+            "name": "3",
+            "coordinates": [
+              37.438592,
+              55.892198
+            ],
+            "azimuth": 325,
+            "tilt": 0
+          },
+          {
+            "name": "4",
+            "coordinates": [
+              37.438367,
+              55.892112
+            ],
+            "azimuth": 325,
+            "tilt": 0
+          },
+          {
+            "name": "5",
+            "coordinates": [
+              37.438143,
+              55.892021
+            ],
+            "azimuth": 325,
+            "tilt": 0
+          }
+        ],
+        "metro": [
+          {
+            "id": "2135150818",
+            "name": "Ховрино",
+            "distance": "3,1 км",
+            "coordinates": [
+              37.480773532,
+              55.878274513
+            ],
+            "type": "metro",
+            "color": "#0a6f20"
+          },
+          {
+            "id": "station__9858882",
+            "name": "Планерная",
+            "distance": "3,5 км",
+            "coordinates": [
+              37.436405811,
+              55.8609271
+            ],
+            "type": "metro",
+            "color": "#92007b"
+          },
+          {
+            "id": "3335468575",
+            "name": "Беломорская",
+            "distance": "3,8 км",
+            "coordinates": [
+              37.475693345,
+              55.865372738
+            ],
+            "type": "metro",
+            "color": "#0a6f20"
+          }
+        ],
+        "stops": [
+          {
+            "id": "stop__9680781",
+            "name": "Магазин Мелодия",
+            "distance": "12 м",
+            "coordinates": [
+              37.438644748,
+              55.892046161
+            ],
+            "type": "common"
+          },
+          {
+            "id": "stop__9683525",
+            "name": "Первомайская улица",
+            "distance": "290 м",
+            "coordinates": [
+              37.442629505,
+              55.893440339
+            ],
+            "type": "common"
+          },
+          {
+            "id": "stop__9648465",
+            "name": "Улица Маяковского",
+            "distance": "360 м",
+            "coordinates": [
+              37.435683202,
+              55.889426391
+            ],
+            "type": "common"
+          },
+          {
+            "id": "stop__9673502",
+            "name": "Аптека",
+            "distance": "480 м",
+            "coordinates": [
+              37.446165,
+              55.891031
+            ],
+            "type": "common"
+          },
+          {
+            "id": "stop__9648467",
+            "name": "Нагорное шоссе",
+            "distance": "580 м",
+            "coordinates": [
+              37.429956905,
+              55.893981229
+            ],
+            "type": "common"
+          }
+        ],
+        "photos": {
+          "count": 3,
+          "urlTemplate": "https://avatars.mds.yandex.net/get-ugc/786911/2a0000015f57ad283353bc5f7ade57fc272a/%s",
+          "items": [
+            {
+              "urlTemplate": "https://avatars.mds.yandex.net/get-ugc/786911/2a0000015f57ad283353bc5f7ade57fc272a/%s"
+            },
+            {
+              "urlTemplate": "https://avatars.mds.yandex.net/get-ugc/786911/2a0000015f57c296975ec003c0e32d6140f2/%s"
+            },
+            {
+              "urlTemplate": "https://avatars.mds.yandex.net/get-ugc/786911/2a0000015f57e62efa25b85ac68cc06794b6/%s"
+            }
+          ],
+          "panoramas": []
+        },
+        "logId": "dHlwZT1nZW9jb2RlcjthZGRyZXNzPdCg0L7RgdGB0LjRjywg0JzQvtGB0LrQvtCy0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwsINCl0LjQvNC60LgsINGD0LvQuNGG0LAg0JzQsNGP0LrQvtCy0YHQutC+0LPQviwgMjAvMzcuNDM4NjgyLDU1Ljg5MjE1OC8x",
+        "sources": [],
+        "analyticsId": "1"
+      },
+      "bounds": [
+        [
+          37.43457655,
+          55.88985077
+        ],
+        [
+          37.44278716,
+          55.89446464
+        ]
+      ],
+      "requestEnd": 1554306388867,
+      "requestStart": 1554306388841,
+      "requestSelfDuration": 26
+    }
+  }
+}

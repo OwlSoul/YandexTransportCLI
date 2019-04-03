@@ -1,0 +1,596 @@
+{
+  "data": {
+    "type": "Feature",
+    "geometries": [
+      {
+        "type": "Point",
+        "coordinates": [
+          37.678450655,
+          55.772332049
+        ]
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        37.678450655,
+        55.772332049
+      ]
+    },
+    "properties": {
+      "name": "Метро Бауманская",
+      "description": "Метро Бауманская",
+      "currentTime": "Wed Apr 03 2019 23:24:54 GMT+0300 (MSK)",
+      "StopMetaData": {
+        "id": "stop__9643291",
+        "name": "Метро Бауманская",
+        "type": "urban",
+        "region": {
+          "id": 213,
+          "ename": "moscow",
+          "name": "moscow",
+          "names": {
+            "ablative": "",
+            "accusative": "Москву",
+            "dative": "Москве",
+            "directional": "",
+            "genitive": "Москвы",
+            "instrumental": "Москвой",
+            "locative": "",
+            "nominative": "Москва",
+            "preposition": "в",
+            "prepositional": "Москве"
+          }
+        },
+        "Transport": [
+          {
+            "id": "2036928299",
+            "lineId": "2036924457",
+            "name": "50",
+            "Types": [
+              "tramway"
+            ],
+            "type": "tramway",
+            "EssentialStops": [
+              {
+                "id": "stop__9645193",
+                "name": "Дом культуры Компрессор"
+              },
+              {
+                "id": "stop__9645195",
+                "name": "Дом культуры Компрессор"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Scheduled": {
+                    "value": 1554323400,
+                    "text": "23:30"
+                  },
+                  "Estimated": {
+                    "value": 1554323239,
+                    "text": "23:27"
+                  },
+                  "vehicleId": "codd%5Fnew|894013%5F31205"
+                },
+                {
+                  "Scheduled": {
+                    "value": 1554324000,
+                    "text": "23:40"
+                  },
+                  "Estimated": {
+                    "value": 1554323495,
+                    "text": "23:31"
+                  },
+                  "vehicleId": "codd%5Fnew|366863%5F31174"
+                },
+                {
+                  "Scheduled": {
+                    "value": 1554324600,
+                    "text": "23:50"
+                  }
+                }
+              ],
+              "departureTime": "23:30"
+            }
+          },
+          {
+            "id": "213B_125m_minibus_default",
+            "lineId": "213_125m_minibus_default",
+            "name": "425",
+            "Types": [
+              "bus"
+            ],
+            "type": "bus",
+            "EssentialStops": [
+              {
+                "id": "stop__9711715",
+                "name": "Платформа Серп и Молот"
+              },
+              {
+                "id": "stop__9711715",
+                "name": "Платформа Серп и Молот"
+              }
+            ],
+            "BriefSchedule": {
+              "Frequency": {
+                "text": "30 мин",
+                "value": 1800,
+                "begin": {
+                  "value": 1554350875,
+                  "text": "7:07"
+                },
+                "end": {
+                  "value": 1554409375,
+                  "text": "23:22"
+                }
+              }
+            }
+          },
+          {
+            "id": "213A_37_tramway_mosgortrans",
+            "lineId": "213_37_tramway_mosgortrans",
+            "name": "37",
+            "Types": [
+              "tramway"
+            ],
+            "type": "tramway",
+            "EssentialStops": [
+              {
+                "id": "stop__9645171",
+                "name": "Новогиреево"
+              },
+              {
+                "id": "stop__9645173",
+                "name": "Новогиреево"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Scheduled": {
+                    "value": 1554323820,
+                    "text": "23:37"
+                  },
+                  "Estimated": {
+                    "value": 1554323374,
+                    "text": "23:29"
+                  },
+                  "vehicleId": "codd%5Fnew|55392%5F30369"
+                },
+                {
+                  "Scheduled": {
+                    "value": 1554325260,
+                    "text": "0:01"
+                  },
+                  "Estimated": {
+                    "value": 1554323552,
+                    "text": "23:32"
+                  },
+                  "vehicleId": "codd%5Fnew|54459%5F30399"
+                },
+                {
+                  "Scheduled": {
+                    "value": 1554349200,
+                    "text": "6:40"
+                  },
+                  "Estimated": {
+                    "value": 1554323709,
+                    "text": "23:35"
+                  },
+                  "vehicleId": "codd%5Fnew|59517%5F30947"
+                },
+                {
+                  "Estimated": {
+                    "value": 1554323958,
+                    "text": "23:39"
+                  },
+                  "vehicleId": "codd%5Fnew|129888%5F30731"
+                }
+              ],
+              "departureTime": "23:37"
+            }
+          },
+          {
+            "id": "213A_45_tramway_mosgortrans",
+            "lineId": "213_45_tramway_mosgortrans",
+            "name": "45",
+            "Types": [
+              "tramway"
+            ],
+            "type": "tramway",
+            "EssentialStops": [
+              {
+                "id": "stop__9645625",
+                "name": "Сокольническая застава"
+              },
+              {
+                "id": "stop__9645625",
+                "name": "Сокольническая застава"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Scheduled": {
+                    "value": 1554343140,
+                    "text": "4:59"
+                  }
+                },
+                {
+                  "Scheduled": {
+                    "value": 1554344280,
+                    "text": "5:18"
+                  }
+                },
+                {
+                  "Scheduled": {
+                    "value": 1554345480,
+                    "text": "5:38"
+                  }
+                }
+              ],
+              "departureTime": "4:59"
+            }
+          },
+          {
+            "id": "BA_tramway_default",
+            "lineId": "B_tramway_default",
+            "name": "Б",
+            "Types": [
+              "tramway"
+            ],
+            "type": "tramway",
+            "EssentialStops": [
+              {
+                "id": "stop__9647150",
+                "name": "Курский вокзал"
+              },
+              {
+                "id": "stop__9647150",
+                "name": "Курский вокзал"
+              }
+            ],
+            "BriefSchedule": {
+              "Events": [
+                {
+                  "Scheduled": {
+                    "value": 1554346380,
+                    "text": "5:53"
+                  },
+                  "Estimated": {
+                    "value": 1554323868,
+                    "text": "23:37"
+                  },
+                  "vehicleId": "codd%5Fnew|62070%5F30774"
+                },
+                {
+                  "Scheduled": {
+                    "value": 1554347580,
+                    "text": "6:13"
+                  },
+                  "Estimated": {
+                    "value": 1554324665,
+                    "text": "23:51"
+                  },
+                  "vehicleId": "codd%5Fnew|58995%5F30830"
+                },
+                {
+                  "Scheduled": {
+                    "value": 1554348480,
+                    "text": "6:28"
+                  }
+                }
+              ],
+              "departureTime": "5:53"
+            }
+          }
+        ]
+      }
+    },
+    "toponymSearchResponse": {
+      "requestId": "1554323094248217-2101340207-sas1-6015",
+      "requestSerpId": "1554323094248217-2101340207-sas1-6015",
+      "requestContext": "ZAAAAAgAEAAaKAoSCQAAAAAAkHZAEQAAAAAAoGZAEhIJAAAAAAAA8L8RAAAAAAAA8L8iAQAoCjAAOJmXvcio2b7q2gFA/v//////////AUgBVQAAgL9Y////////////AWISZGlyZWN0X3BhZ2VfaWQ9MjQyagBwAJ0BzczMPaABAKgBAA==",
+      "requestQuery": "55.772332,37.678451",
+      "requestCorrectedQuery": "55.772332,37.678451",
+      "requestPoint": {
+        "type": "Point",
+        "coordinates": [
+          37.678451,
+          55.772332
+        ]
+      },
+      "requestBounds": [
+        [
+          37.04842675,
+          55.43644829
+        ],
+        [
+          38.17590226,
+          56.04690124
+        ]
+      ],
+      "displayType": "single",
+      "totalResultCount": 8,
+      "items": [
+        {
+          "requestId": "1554323094248217-2101340207-sas1-6015",
+          "title": "Бауманская улица, 32с2",
+          "description": "Москва, Россия",
+          "address": "Россия, Москва, Бауманская улица, 32с2",
+          "coordinates": [
+            37.678325,
+            55.772163
+          ],
+          "bounds": [
+            [
+              37.67422,
+              55.769849
+            ],
+            [
+              37.682431,
+              55.774477
+            ]
+          ],
+          "displayCoordinates": [
+            37.678451,
+            55.772332
+          ],
+          "type": "toponym",
+          "id": "56731268",
+          "kind": "house",
+          "postalCode": "105005",
+          "seoname": "baumanskaya_ulitsa_32s2",
+          "geoId": 213,
+          "uri": "ymapsbm1://geo?ll=37.678%2C55.772&spn=0.001%2C0.001&text=%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F%2C%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%91%D0%B0%D1%83%D0%BC%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%2C%2032%D1%812",
+          "entrances": [
+            {
+              "coordinates": [
+                37.678442,
+                55.772284
+              ],
+              "azimuth": 82,
+              "tilt": 0
+            }
+          ],
+          "metro": [
+            {
+              "id": "station__10095100",
+              "name": "Бауманская",
+              "distance": "52 м",
+              "coordinates": [
+                37.679042638,
+                55.772408661
+              ],
+              "type": "metro",
+              "color": "#003399"
+            },
+            {
+              "id": "station__9858828",
+              "name": "Комсомольская",
+              "distance": "1,5 км",
+              "coordinates": [
+                37.654701004,
+                55.775708578
+              ],
+              "type": "metro",
+              "color": "#7f0000"
+            },
+            {
+              "id": "station__9858827",
+              "name": "Комсомольская",
+              "distance": "1,6 км",
+              "coordinates": [
+                37.65384863,
+                55.774355143
+              ],
+              "type": "metro",
+              "color": "#cc0000"
+            }
+          ],
+          "stops": [
+            {
+              "id": "stop__9643291",
+              "name": "Метро Бауманская",
+              "distance": "20 м",
+              "coordinates": [
+                37.678450655,
+                55.772332049
+              ],
+              "type": "common"
+            },
+            {
+              "id": "stop__9711960",
+              "name": "Елоховская площадь",
+              "distance": "220 м",
+              "coordinates": [
+                37.675240729,
+                55.773039471
+              ],
+              "type": "common"
+            },
+            {
+              "id": "stop__9643266",
+              "name": "Аптекарский переулок",
+              "distance": "290 м",
+              "coordinates": [
+                37.679430741,
+                55.769636007
+              ],
+              "type": "common"
+            },
+            {
+              "id": "stop__9642795",
+              "name": "Спартаковская улица",
+              "distance": "470 м",
+              "coordinates": [
+                37.67097092,
+                55.771235213
+              ],
+              "type": "common"
+            },
+            {
+              "id": "stop__9648701",
+              "name": "Госпитальный переулок",
+              "distance": "500 м",
+              "coordinates": [
+                37.685907036,
+                55.770655438
+              ],
+              "type": "common"
+            }
+          ],
+          "logId": "dHlwZT1nZW9jb2RlcjthZGRyZXNzPdCg0L7RgdGB0LjRjywg0JzQvtGB0LrQstCwLCDQkdCw0YPQvNCw0L3RgdC60LDRjyDRg9C70LjRhtCwLCAzMtGBMi8zNy42NzgzMjUsNTUuNzcyMTYzLzE=",
+          "sources": [],
+          "analyticsId": "1"
+        }
+      ],
+      "exactResult": {
+        "requestId": "1554323094248217-2101340207-sas1-6015",
+        "title": "Бауманская улица, 32с2",
+        "description": "Москва, Россия",
+        "address": "Россия, Москва, Бауманская улица, 32с2",
+        "coordinates": [
+          37.678325,
+          55.772163
+        ],
+        "bounds": [
+          [
+            37.67422,
+            55.769849
+          ],
+          [
+            37.682431,
+            55.774477
+          ]
+        ],
+        "displayCoordinates": [
+          37.678451,
+          55.772332
+        ],
+        "type": "toponym",
+        "id": "56731268",
+        "kind": "house",
+        "postalCode": "105005",
+        "seoname": "baumanskaya_ulitsa_32s2",
+        "geoId": 213,
+        "uri": "ymapsbm1://geo?ll=37.678%2C55.772&spn=0.001%2C0.001&text=%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F%2C%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%91%D0%B0%D1%83%D0%BC%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%2C%2032%D1%812",
+        "entrances": [
+          {
+            "coordinates": [
+              37.678442,
+              55.772284
+            ],
+            "azimuth": 82,
+            "tilt": 0
+          }
+        ],
+        "metro": [
+          {
+            "id": "station__10095100",
+            "name": "Бауманская",
+            "distance": "52 м",
+            "coordinates": [
+              37.679042638,
+              55.772408661
+            ],
+            "type": "metro",
+            "color": "#003399"
+          },
+          {
+            "id": "station__9858828",
+            "name": "Комсомольская",
+            "distance": "1,5 км",
+            "coordinates": [
+              37.654701004,
+              55.775708578
+            ],
+            "type": "metro",
+            "color": "#7f0000"
+          },
+          {
+            "id": "station__9858827",
+            "name": "Комсомольская",
+            "distance": "1,6 км",
+            "coordinates": [
+              37.65384863,
+              55.774355143
+            ],
+            "type": "metro",
+            "color": "#cc0000"
+          }
+        ],
+        "stops": [
+          {
+            "id": "stop__9643291",
+            "name": "Метро Бауманская",
+            "distance": "20 м",
+            "coordinates": [
+              37.678450655,
+              55.772332049
+            ],
+            "type": "common"
+          },
+          {
+            "id": "stop__9711960",
+            "name": "Елоховская площадь",
+            "distance": "220 м",
+            "coordinates": [
+              37.675240729,
+              55.773039471
+            ],
+            "type": "common"
+          },
+          {
+            "id": "stop__9643266",
+            "name": "Аптекарский переулок",
+            "distance": "290 м",
+            "coordinates": [
+              37.679430741,
+              55.769636007
+            ],
+            "type": "common"
+          },
+          {
+            "id": "stop__9642795",
+            "name": "Спартаковская улица",
+            "distance": "470 м",
+            "coordinates": [
+              37.67097092,
+              55.771235213
+            ],
+            "type": "common"
+          },
+          {
+            "id": "stop__9648701",
+            "name": "Госпитальный переулок",
+            "distance": "500 м",
+            "coordinates": [
+              37.685907036,
+              55.770655438
+            ],
+            "type": "common"
+          }
+        ],
+        "logId": "dHlwZT1nZW9jb2RlcjthZGRyZXNzPdCg0L7RgdGB0LjRjywg0JzQvtGB0LrQstCwLCDQkdCw0YPQvNCw0L3RgdC60LDRjyDRg9C70LjRhtCwLCAzMtGBMi8zNy42NzgzMjUsNTUuNzcyMTYzLzE=",
+        "sources": [],
+        "analyticsId": "1"
+      },
+      "bounds": [
+        [
+          37.67422012,
+          55.76984856
+        ],
+        [
+          37.68243072,
+          55.77447675
+        ]
+      ],
+      "requestEnd": 1554323094267,
+      "requestStart": 1554323094244,
+      "requestSelfDuration": 23
+    }
+  }
+}
