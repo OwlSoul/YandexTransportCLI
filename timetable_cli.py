@@ -27,17 +27,6 @@ class ExecutorThread(threading.Thread):
         self.proxy = YandexTransportProxy(host, port)
 
     def run(self):
-        # Химки, Остановка Магазин Мелодия
-        #url = "https://yandex.ru/maps/10758/himki/?masstransit[stopId]=stop__9680781"
-        #url = "https://yandex.ru/maps/214/dolgoprudniy/?ll=37.495213%2C55.935955&masstransit%5BstopId%5D=stop__9682838&mode=stop&z=16"
-        url = "https://yandex.ru/maps/213/moscow/?ll=37.744617%2C55.648743&masstransit%5BstopId%5D=stop__9647488&mode=stop&z=18"
-        #url = "https://yandex.ru/maps/213/moscow/?ll=37.633785%2C55.754302&masstransit%5BstopId%5D=2043316380&mode=stop&z=19"
-        #url = "https://yandex.ru/maps/214/dolgoprudniy/?ll=37.517083%2C55.934957&masstransit%5BstopId%5D=station__lh_9600766&mode=stop&z=15"
-        #url = "https://yandex.ru/maps/213/moscow/?ll=37.603660%2C55.812716&masstransit%5BstopId%5D=1737532621&mode=stop&z=17"
-        #url = "https://yandex.ru/maps/213/moscow/?ll=37.522575%2C55.742573&masstransit%5BstopId%5D=1727707971&mode=stop&z=15"
-        #url = "https://yandex.ru/maps/213/moscow/?ll=37.549987%2C55.713457&mode=poi&poi%5Bpoint%5D=37.551033%2C55.713206&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D76964210603&z=16"
-        #url = "https://yandex.ru/maps/213/moscow/?ll=37.636196%2C55.822359&masstransit%5BstopId%5D=station__9858958&mode=stop&z=15"
-        #url = "https://yandex.ru/maps/213/moscow/?ll=37.678782%2C55.772268&masstransit%5BstopId%5D=stop__9643291&mode=stop&source=serp_navig&z=18"
         while self.parent.is_running:
             json_data = []
 
@@ -50,7 +39,7 @@ class ExecutorThread(threading.Thread):
                     self.parent.data_collection_status = self.parent.DATA_COLLECTION_FAILED
             else:
                 try:
-                    json_data = self.proxy.get_stop_info(url)
+                    json_data = self.proxy.get_stop_info(self.parent.source_url)
                     self.parent.data_collection_status = self.parent.DATA_COLLECTION_OK
                 except:
                     self.parent.data_collection_status = self.parent.DATA_COLLECTION_FAILED
@@ -67,7 +56,7 @@ class ExecutorThread(threading.Thread):
             self.parent.data_lock.release()
 
             # Wait for some time
-            for i in range(0, 60):
+            for i in range(0, self.parent.wait_time):
                 if not self.parent.is_running:
                     break
                 time.sleep(1)
@@ -89,6 +78,27 @@ class Application:
 
 
     def __init__(self):
+        # Proxy Server host and port
+        self.proxy_host = '127.0.0.1'
+        self.proxy_port = 25555
+
+        # Delay between queries, default is 1 minute
+        self.wait_time = 60
+
+        # Source, url or filename
+        # Химки, Остановка Магазин Мелодия
+        # url = "https://yandex.ru/maps/10758/himki/?masstransit[stopId]=stop__9680781"
+        self.source_url = "https://yandex.ru/maps/214/dolgoprudniy/?ll=37.495213%2C55.935955&masstransit%5BstopId%5D=stop__9682838&mode=stop&z=16"
+        # url = "https://yandex.ru/maps/213/moscow/?ll=37.744617%2C55.648743&masstransit%5BstopId%5D=stop__9647488&mode=stop&z=18"
+        # url = "https://yandex.ru/maps/213/moscow/?ll=37.633785%2C55.754302&masstransit%5BstopId%5D=2043316380&mode=stop&z=19"
+        # self.source_url = "https://yandex.ru/maps/214/dolgoprudniy/?ll=37.517083%2C55.934957&masstransit%5BstopId%5D=station__lh_9600766&mode=stop&z=15"
+        # url = "https://yandex.ru/maps/213/moscow/?ll=37.603660%2C55.812716&masstransit%5BstopId%5D=1737532621&mode=stop&z=17"
+        # url = "https://yandex.ru/maps/213/moscow/?ll=37.522575%2C55.742573&masstransit%5BstopId%5D=1727707971&mode=stop&z=15"
+        # url = "https://yandex.ru/maps/213/moscow/?ll=37.549987%2C55.713457&mode=poi&poi%5Bpoint%5D=37.551033%2C55.713206&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D76964210603&z=16"
+        # url = "https://yandex.ru/maps/213/moscow/?ll=37.636196%2C55.822359&masstransit%5BstopId%5D=station__9858958&mode=stop&z=15"
+        # url = "https://yandex.ru/maps/213/moscow/?ll=37.678782%2C55.772268&masstransit%5BstopId%5D=stop__9643291&mode=stop&source=serp_navig&z=18"
+        # self.source_url = 'https://yandex.ru/maps/213/moscow/?ll=37.744617%2C55.648743&masstransit%5BstopId%5D=stop__9647488&mode=stop&z=18'
+
         # Data lock
         self.data_lock = threading.Lock()
 
@@ -204,7 +214,8 @@ class Application:
 
         return result
 
-    def get_yandex_timestamp(self, data):
+    @staticmethod
+    def get_yandex_timestamp(data):
         result = None
         try:
             yandex_time = data['data']['properties']['currentTime']
@@ -595,7 +606,7 @@ class Application:
         return 0
 
     def run(self):
-        executor_thread = ExecutorThread(self, '127.0.0.1', 25555)
+        executor_thread = ExecutorThread(self, self.proxy_host, self.proxy_port)
         print("STARTING EXECUTOR THREAD...")
         executor_thread.start()
         print("STARTING MAIN WINDOW...")
