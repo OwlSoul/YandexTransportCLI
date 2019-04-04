@@ -13,9 +13,13 @@ symbols = {'bus': u"\U0001F68C",
            'minibus': u"\U0001F690",
            'tramway': u"\U0001F68B",
            'trolleybus': u"\U0001F68E",
+           'suburban': u"\U0001F683",
+           'underground': u"\U0001F687",
            'unknown': u"\u2753"}
 
 is_running = True
+data_collection_status = 0
+update_time = "--:--:--"
 data = []
 
 data_lock = threading.Lock()
@@ -31,19 +35,29 @@ class ExecutorThread(threading.Thread):
         global is_running
         global data
         global data_lock
+        global data_collection_status
+        global update_time
         # Химки, Остановка Магазин Мелодия
         #url = "https://yandex.ru/maps/10758/himki/?masstransit[stopId]=stop__9680781"
-
-        url = "https://yandex.ru/maps/213/moscow/?ll=37.678782%2C55.772268&masstransit%5BstopId%5D=stop__9643291&mode=stop&source=serp_navig&z=18"
+        #url = "https://yandex.ru/maps/214/dolgoprudniy/?ll=37.495213%2C55.935955&masstransit%5BstopId%5D=stop__9682838&mode=stop&z=16"
+        url = "https://yandex.ru/maps/213/moscow/?ll=37.744617%2C55.648743&masstransit%5BstopId%5D=stop__9647488&mode=stop&z=18"
+        #url = "https://yandex.ru/maps/213/moscow/?ll=37.633785%2C55.754302&masstransit%5BstopId%5D=2043316380&mode=stop&z=19"
+        #url = "https://yandex.ru/maps/214/dolgoprudniy/?ll=37.517083%2C55.934957&masstransit%5BstopId%5D=station__lh_9600766&mode=stop&z=15"
+        #url = "https://yandex.ru/maps/213/moscow/?ll=37.603660%2C55.812716&masstransit%5BstopId%5D=1737532621&mode=stop&z=17"
+        #url = "https://yandex.ru/maps/213/moscow/?ll=37.522575%2C55.742573&masstransit%5BstopId%5D=1727707971&mode=stop&z=15"
+        #url = "https://yandex.ru/maps/213/moscow/?ll=37.549987%2C55.713457&mode=poi&poi%5Bpoint%5D=37.551033%2C55.713206&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D76964210603&z=16"
+        #url = "https://yandex.ru/maps/213/moscow/?ll=37.636196%2C55.822359&masstransit%5BstopId%5D=station__9858958&mode=stop&z=15"
+        #url = "https://yandex.ru/maps/213/moscow/?ll=37.678782%2C55.772268&masstransit%5BstopId%5D=stop__9643291&mode=stop&source=serp_navig&z=18"
         while is_running:
             try:
                 json_data = self.proxy.get_stop_info(url)
+                update_time = str(datetime.datetime.now().time().strftime("%H:%M:%S"))
+                data_collection_status = 1
                 data_lock.acquire()
                 data = json_data.copy()
                 data_lock.release()
             except Exception as e:
-                print("AAAAAAAAA!!!!")
-                is_running = False
+                data_collection_status = 2
             for i in range(0, 60):
                 if not is_running:
                     break
@@ -59,6 +73,10 @@ def route_type_to_name(route_type):
         return 'ТРАМВАИ'
     if route_type == 'minibus':
         return 'МАРШРУТКИ'
+    if route_type == 'suburban':
+        return 'ПРИГОРОДНЫЕ ПОЕЗДА'
+    if route_type == 'underground':
+        return "МЕТРО"
     return 'ДРУГОЙ ТРАНСПОРТ'
 
 def main(stdscr):
@@ -67,6 +85,8 @@ def main(stdscr):
 
     global is_running
     global data
+    global data_collection_status
+    global update_time
 
     while is_running:
         print("UOOO")
@@ -85,10 +105,11 @@ def main(stdscr):
         data_lock.acquire()
 
         routes = []
-        try:
-            routes = data['data']['properties']['StopMetaData']['Transport']
-        except Exception as e:
-            print("Exception:" + str(e))
+        if data_collection_status == 1:
+            try:
+                routes = data['data']['properties']['StopMetaData']['Transport']
+            except Exception as e:
+                print("Exception:" + str(e))
 
         # Sorting the data by route name
         try:
@@ -114,12 +135,20 @@ def main(stdscr):
             stdscr.move(i, 12)
             stdscr.addstr(data['data']['properties']['name'])
         except Exception as e:
-            stdscr.addstr('????')
+            if data_collection_status == 0:
+                stdscr.addstr('ИДЕТ СБОР ДАННЫХ')
+            elif data_collection_status == 2:
+                stdscr.addstr('НЕТ ДАННЫХ О ТРАНСПОРТЕ ПО ДАННОЙ ССЫЛКЕ')
+            else:
+                stdscr.addstr('????')
         i += 1
 
         try:
             stdscr.move(i, 0)
             stdscr.addstr("ВРЕМЯ     : ")
+            height, width = stdscr.getmaxyx()
+            stdscr.move(i, width - 21)
+            stdscr.addstr("ОБНОВЛЕНО : " + update_time)
             stdscr.move(i, 12)
             stdscr.addstr(str(datetime.datetime.now().time().strftime("%H:%M:%S")))
             stdscr.move(i, 30)
@@ -183,18 +212,19 @@ def main(stdscr):
             except Exception as e:
                 pass
             try:
-                stdscr.move(i, 48)
+                stdscr.move(i, 47)
                 stdscr.addstr("ЧАСЫ РАБОТЫ")
             except Exception as e:
                 pass
             try:
-                stdscr.move(i, 63)
-                stdscr.addstr("ЧАСТ")
+                stdscr.move(i, 60)
+                stdscr.addstr("ЧАСТОТА")
             except Exception as e:
                 pass
             try:
-                stdscr.move(i, 70)
-                stdscr.addstr("ОЖИДАНИЕ")
+                stdscr.move(i, 69)
+                stdscr.addstr("БЛИЖАЙШИЕ")
+
             except Exception as e:
                 pass
             i += 1
@@ -237,8 +267,10 @@ def main(stdscr):
                                     transport_eta_nearest = None
 
                                 if transport_eta_nearest is not None:
-                                    if transport_eta_nearest < 60:
+                                    if transport_eta_nearest < 90:
                                         is_now = True
+                                    if transport_eta_nearest < 0:
+                                        transport_eta_nearest = 0
                                     transport_eta_nearest = int(transport_eta_nearest // 60)
 
                                 if transport_eta_nearest is None:
@@ -275,7 +307,16 @@ def main(stdscr):
                     stdscr.move(i, 5)
                 except:
                     pass
-                stdscr.addstr(route['name'][0:6].rjust(6))
+
+                route_name_len = len(route['name'])
+                if route_name_len <= 6:
+                    stdscr.addstr(route['name'].rjust(6))
+                else:
+                    endless_name = route['name']+ "   "
+                    route_name_len = len(endless_name)
+                    cntr = time_counter % route_name_len
+                    outstr = endless_name[cntr:(cntr + 6)] + endless_name
+                    stdscr.addstr(outstr[0:6])
 
                 # Draw route terminals
                 try:
@@ -290,7 +331,7 @@ def main(stdscr):
                         pass
                 else:
                     # Buffer for endless loop running line
-                    route_terminals += "     "
+                    route_terminals += "         "
                     str_len = len(route_terminals)
                     cntr = time_counter % str_len
                     outstr = route_terminals[cntr:(cntr + 30)] + route_terminals
