@@ -1,0 +1,4 @@
+  File "./timetable_cli.py", line 499
+    line_number += 1
+              ^
+IndentationError: expected an indented block
