@@ -1,16 +1,48 @@
 #!/usr/bin/env python3
-import curses
+
+"""
+Yandex Transport Timetable in the terminal. Requires unicode support and launched
+and accessible Yandex Transport Proxy server.
+(see: https://github.com/OwlSoul/YandexTransportProxy)
+"""
+
+__author__ = "Yury D."
+__credits__ = ["Yury D."]
+__license__ = "MIT"
+__version__ = "1.0.0"
+__maintainer__ = "Yury D."
+__email__ = "TheOwlSoul@gmail.com"
+__status__ = "Beta"
+
+# NOTE: Catching general exception is definitely bad, but in case of this
+# program it is OK, every single 'move' or 'addstr' can throw an exception here.
+# Every "draw someting in curses" operation if wrapped in try-except block,
+# but it really doesn't matter if it failed to draw something.
+# If it failed to draw it, we don't need it. Yes, exactly that.
+# More than that, Yandex JSONs have huge depth, and doing
+# if x in y:
+#     if z in y[x]:
+#         if a in y[x][z]
+# is a bloody unreadable mess.
+#
+# Let's forgive me this time, OK?
+#
+# pylint: disable = W0702, W0703
+
+import argparse
 from curses import wrapper
 import json
 import sys
 import time
 import datetime
+import threading
+import signal
+from collections import defaultdict
 from natsort import natsorted
 from yandex_transport_webdriver_api import YandexTransportProxy
-from collections import defaultdict
-import threading
 
-symbols = {'bus': u"\U0001F68C",
+
+SYMBOLS = {'bus': u"\U0001F68C",
            'minibus': u"\U0001F690",
            'tramway': u"\U0001F68B",
            'trolleybus': u"\U0001F68E",
@@ -19,6 +51,9 @@ symbols = {'bus': u"\U0001F68C",
            'unknown': u"\u2753"}
 
 class ExecutorThread(threading.Thread):
+    """
+    Executor Thread class, will periodically poll Yandex Transport Proxy server.
+    """
     def __init__(self, parent, host, port):
         super().__init__()
         self.parent = parent
@@ -28,41 +63,48 @@ class ExecutorThread(threading.Thread):
 
     def run(self):
         while self.parent.is_running:
+            self.parent.display_error = ""
             json_data = []
 
             if self.parent.data_source == self.parent.DATA_SOURCE_FILE:
                 try:
-                    json_data = self.parent.load_data_from_file('data.json')
+                    json_data = self.parent.load_data_from_file(self.parent.source_url)
                     self.parent.data_collection_status = self.parent.DATA_COLLECTION_OK
                 except Exception as e:
-                    print("Exception (data load from file)" + str(e))
+                    self.parent.display_error = "Exception (data load from file)" + str(e)
                     self.parent.data_collection_status = self.parent.DATA_COLLECTION_FAILED
             else:
                 try:
-                    json_data = self.proxy.get_stop_info(self.parent.source_url)
+                    json_data = self.proxy.get_stop_info(self.parent.source_url,
+                                                         timeout=self.parent.timeout)
                     self.parent.data_collection_status = self.parent.DATA_COLLECTION_OK
-                except:
+                except Exception as e:
+                    self.parent.display_error = str(e)
                     self.parent.data_collection_status = self.parent.DATA_COLLECTION_FAILED
 
             self.parent.update_time = str(datetime.datetime.now().time().strftime("%H:%M:%S"))
 
             try:
-                self.parent.yandex_timestamp, timestamp_str = self.parent.get_yandex_timestamp(json_data)
-            except:
-                print("Exception (getting yandex timestamp)" + str(e))
+                self.parent.yandex_timestamp, _ = self.parent.get_yandex_timestamp(json_data)
+            except Exception as e:
+                self.parent.display_error = "Exception (getting Yandex timestamp)" + str(e)
 
+            # Copy data to parent
             self.parent.data_lock.acquire()
             self.parent.data = json_data.copy()
             self.parent.data_lock.release()
 
             # Wait for some time
-            for i in range(0, self.parent.wait_time):
+            for _ in range(0, self.parent.wait_time):
                 if not self.parent.is_running:
                     break
                 time.sleep(1)
         print("EXECUTOR THREAD TERMINATED!")
 
 class Application:
+    """
+    Main Application Class
+    """
     # Data collection status
     DATA_COLLECTION_PENDING = 0
     DATA_COLLECTION_OK = 1
@@ -76,6 +118,12 @@ class Application:
     ROUTE_NAME_ELNARGE_LOWER_TRESHOLD = 105
     ROUTE_NAME_ELNARGE_UPPER_TRESHOLD = 115
 
+    ROUTE_TERMINALS_LENGTH_PREFERRED = 30
+
+    SCREEN_WIDTH_STANDARD = 80
+    SCREEN_WIDTH_NO_FREQ_AND_HOURS = 60
+    SCREEN_WIDTH_NO_HOURS = 70
+    SCREEN_WIDTH_MINIMAL = 40
 
     def __init__(self):
         # Proxy Server host and port
@@ -85,22 +133,14 @@ class Application:
         # Delay between queries, default is 1 minute
         self.wait_time = 60
 
-        # Source, url or filename
-        # Химки, Остановка Магазин Мелодия
-        # url = "https://yandex.ru/maps/10758/himki/?masstransit[stopId]=stop__9680781"
-        self.source_url = "https://yandex.ru/maps/214/dolgoprudniy/?ll=37.495213%2C55.935955&masstransit%5BstopId%5D=stop__9682838&mode=stop&z=16"
-        # url = "https://yandex.ru/maps/213/moscow/?ll=37.744617%2C55.648743&masstransit%5BstopId%5D=stop__9647488&mode=stop&z=18"
-        # url = "https://yandex.ru/maps/213/moscow/?ll=37.633785%2C55.754302&masstransit%5BstopId%5D=2043316380&mode=stop&z=19"
-        # self.source_url = "https://yandex.ru/maps/214/dolgoprudniy/?ll=37.517083%2C55.934957&masstransit%5BstopId%5D=station__lh_9600766&mode=stop&z=15"
-        # url = "https://yandex.ru/maps/213/moscow/?ll=37.603660%2C55.812716&masstransit%5BstopId%5D=1737532621&mode=stop&z=17"
-        # url = "https://yandex.ru/maps/213/moscow/?ll=37.522575%2C55.742573&masstransit%5BstopId%5D=1727707971&mode=stop&z=15"
-        # url = "https://yandex.ru/maps/213/moscow/?ll=37.549987%2C55.713457&mode=poi&poi%5Bpoint%5D=37.551033%2C55.713206&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D76964210603&z=16"
-        # url = "https://yandex.ru/maps/213/moscow/?ll=37.636196%2C55.822359&masstransit%5BstopId%5D=station__9858958&mode=stop&z=15"
-        # url = "https://yandex.ru/maps/213/moscow/?ll=37.678782%2C55.772268&masstransit%5BstopId%5D=stop__9643291&mode=stop&source=serp_navig&z=18"
-        # self.source_url = 'https://yandex.ru/maps/213/moscow/?ll=37.744617%2C55.648743&masstransit%5BstopId%5D=stop__9647488&mode=stop&z=18'
+        # Timeout in getting the data
+        self.timeout = 60
 
         # Data lock
         self.data_lock = threading.Lock()
+
+        # Data source URL
+        self.source_url = ''
 
         # Time when data was updated
         self.update_time = "--:--:--"
@@ -120,23 +160,58 @@ class Application:
         # Data collection status
         self.data_collection_status = self.DATA_COLLECTION_PENDING
 
+        # Error to display on screen
+        self.display_error = ""
+
+        # Executor thread
+        self.executor_thread = None
+
+    def sigint_handler(self, _signal, _frame):
+        """
+        Haldner for SIGINT (and SIGTERM) signals
+        :param _signal: signal
+        :param _frame: frame
+        :return: nothing
+        """
+        self.is_running = False
+        if self.executor_thread is not None:
+            self.executor_thread.join()
+
     @staticmethod
     def route_terminals_width(screen_width):
-        if screen_width < 60:
-            return screen_width - 80 + 30 + 20
-        if screen_width < 70:
-            return screen_width - 80 + 30 + 14
-        return screen_width - 80 + 30
+        """
+        Returns route terminal section width based on current screen width
+        :param screen_width: current screen width
+        :return: integer, route terminal section width
+        """
+        if screen_width < Application.SCREEN_WIDTH_NO_FREQ_AND_HOURS:
+            return screen_width - \
+                   Application.SCREEN_WIDTH_STANDARD + \
+                   Application.ROUTE_TERMINALS_LENGTH_PREFERRED + 20
+        if screen_width < Application.SCREEN_WIDTH_NO_HOURS:
+            return screen_width - \
+                   Application.SCREEN_WIDTH_STANDARD + \
+                   Application.ROUTE_TERMINALS_LENGTH_PREFERRED + 14
+        return screen_width - \
+               Application.SCREEN_WIDTH_STANDARD + \
+               Application.ROUTE_TERMINALS_LENGTH_PREFERRED
 
     @staticmethod
     def route_name_width(screen_width):
-        if screen_width < 40:
+        """
+        Returns route name section width based on current screen width
+        :param screen_width: current screen width
+        :return: integer, route name section width
+        """
+        if screen_width < Application.SCREEN_WIDTH_MINIMAL:
             return Application.ROUTE_NAME_PREFERRED_WIDTH + screen_width - 23
         if screen_width > Application.ROUTE_NAME_ELNARGE_LOWER_TRESHOLD:
             if screen_width > Application.ROUTE_NAME_ELNARGE_UPPER_TRESHOLD:
-                return Application.ROUTE_NAME_PREFERRED_WIDTH + Application.ROUTE_NAME_ELNARGE_UPPER_TRESHOLD \
-                       - Application.ROUTE_NAME_ELNARGE_LOWER_TRESHOLD
-            return Application.ROUTE_NAME_PREFERRED_WIDTH + screen_width - Application.ROUTE_NAME_ELNARGE_LOWER_TRESHOLD
+                return Application.ROUTE_NAME_PREFERRED_WIDTH + \
+                       Application.ROUTE_NAME_ELNARGE_UPPER_TRESHOLD - \
+                       Application.ROUTE_NAME_ELNARGE_LOWER_TRESHOLD
+            return Application.ROUTE_NAME_PREFERRED_WIDTH + screen_width - \
+                   Application.ROUTE_NAME_ELNARGE_LOWER_TRESHOLD
         return Application.ROUTE_NAME_PREFERRED_WIDTH
 
     @staticmethod
@@ -146,18 +221,16 @@ class Application:
         :param route_type: route type from YandexJSON
         :return: human readable name
         """
-        if route_type == 'bus':
-            return 'АВТОБУСЫ'
-        if route_type == 'trolleybus':
-            return 'ТРОЛЛЕЙБУСЫ'
-        if route_type == 'tramway':
-            return 'ТРАМВАИ'
-        if route_type == 'minibus':
-            return 'МАРШРУТКИ'
-        if route_type == 'suburban':
-            return 'ПРИГОРОДНЫЕ ПОЕЗДА'
-        if route_type == 'underground':
-            return "МЕТРО"
+        transit_types = {'bus': 'АВТОБУСЫ',
+                         'trolleybus': 'ТРОЛЛЕЙБУСЫ',
+                         'tramway': 'ТРАМВАИ',
+                         'minibus': 'МАРШРУТКИ',
+                         'suburban': 'ПРИГОРОДНЫЕ ПОЕЗДА',
+                         'underground': "МЕТРО"}
+
+        if route_type in transit_types:
+            return transit_types[route_type]
+
         return 'ДРУГОЙ ТРАНСПОРТ'
 
     @staticmethod
@@ -180,7 +253,8 @@ class Application:
             try:
                 return data['data']['properties']['StopMetaData']['Transport']
             except Exception as e:
-                print("Exception (get_routes):" + str(e), file=sys.stderr)
+                self.data_collection_status = self.DATA_COLLECTION_FAILED
+                self.display_error = "Exception (get_routes): failed to get " + str(e)
                 return []
         else:
             return []
@@ -216,11 +290,18 @@ class Application:
 
     @staticmethod
     def get_yandex_timestamp(data):
+        """
+        Gerring timestamp from Yandex JSON. Yandex sends current time in text format,
+        But time istimations as timestamps. Don't ask why.
+        :param data: Yandex JSON from getStopInfo method
+        :return: timestamp (currentTime).
+        """
         result = None
         try:
             yandex_time = data['data']['properties']['currentTime']
             result = time.mktime(
-                datetime.datetime.strptime(yandex_time, "%a %b %d %Y %H:%M:%S GMT%z (%Z)").timetuple())
+                datetime.datetime.strptime(yandex_time,
+                                           "%a %b %d %Y %H:%M:%S GMT%z (%Z)").timetuple())
             result_str = str(result)
         except Exception as e:
             result_str = "TIME ERROR: " + str(e)
@@ -228,37 +309,44 @@ class Application:
         return result, result_str
 
     def draw_table_header(self, stdscr, start_line, data):
+        """
+        Draw table header
+        :param stdscr: curses screen
+        :param start_line: current line
+        :param data: Yandex JSON from getStopInfo
+        :return: current line after drawing
+        """
         current_line = start_line
-        # SECOND LINE: STOP NAME
+
+        # LINE: STOP NAME
         try:
             stdscr.move(current_line, 0)
             stdscr.addstr("ОСТАНОВКА : ")
             stdscr.move(current_line, 12)
             stdscr.addstr(data['data']['properties']['name'])
-        except Exception as e:
+        except:
             try:
                 if self.data_collection_status == 0:
                     stdscr.addstr('ИДЕТ СБОР ДАННЫХ')
                 elif self.data_collection_status == 2:
-                    stdscr.addstr('НЕТ ДАННЫХ О ТРАНСПОРТЕ ПО ДАННОЙ ССЫЛКЕ')
+                    stdscr.addstr('НЕТ ДАННЫХ')
                 else:
                     stdscr.addstr('????')
             except:
                 pass
         current_line += 1
 
-        # SECOND LINE: TIME, UPDATE TIME
+        # LINE: TIME, UPDATE TIME
         try:
             # Current time
             stdscr.move(current_line, 0)
             stdscr.addstr("ВРЕМЯ     : " + str(datetime.datetime.now().time().strftime("%H:%M:%S")))
 
             # Update time
-            height, width = stdscr.getmaxyx()
-            stdscr.move(current_line, width - 21)
+            stdscr.move(current_line, stdscr.getmaxyx()[1] - 21)
             if self.update_time is not None:
                 stdscr.addstr("ОБНОВЛЕНО : " + self.update_time)
-        except Exception as e:
+        except:
             pass
         current_line += 1
 
@@ -267,11 +355,29 @@ class Application:
             try:
                 stdscr.move(current_line, j)
                 stdscr.addstr('-')
-            except Exception as e:
+            except:
                 pass
         current_line += 1
 
         return current_line
+
+    @staticmethod
+    def draw_footer(stdscr, current_line, source_url):
+        """
+        Draw footer of timetable
+        :param stdscr: curses screen
+        :param current_line: current line
+        :param source_url: URL of the data source (filename or Web URL)
+        :return nothing:
+        """
+        # FIRST LINE: DATA SOURCE
+        if current_line >= stdscr.getmaxyx()[0]:
+            return
+        try:
+            stdscr.move(stdscr.getmaxyx()[0] - 1, 0)
+            stdscr.addstr("ИСТОЧНИК ДАННЫХ: " + source_url)
+        except:
+            pass
 
     def draw_route_type_header(self, stdscr, start_line, route_type):
         """
@@ -284,9 +390,8 @@ class Application:
         current_line = start_line
         try:
             stdscr.move(start_line, 3)
-            height, width = stdscr.getmaxyx()
-            stdscr.addstr(self.route_type_to_name(route_type).upper().center(width - 2))
-        except Exception as e:
+            stdscr.addstr(self.route_type_to_name(route_type).upper().center(stdscr.getmaxyx()[1] - 2))
+        except:
             pass
 
         current_line += 1
@@ -294,41 +399,52 @@ class Application:
         try:
             stdscr.move(current_line, 3)
             stdscr.addstr("НОМЕР")
-        except Exception as e:
+        except:
             pass
 
         try:
-            if stdscr.getmaxyx()[1] >= 40:
+            if stdscr.getmaxyx()[1] >= Application.SCREEN_WIDTH_MINIMAL:
                 line_width = self.route_terminals_width(stdscr.getmaxyx()[1])
-                stdscr.move(current_line, 14 + self.route_name_width(stdscr.getmaxyx()[1]) - Application.ROUTE_NAME_PREFERRED_WIDTH)
+                stdscr.move(current_line,
+                            14 + self.route_name_width(stdscr.getmaxyx()[1]) -
+                            Application.ROUTE_NAME_PREFERRED_WIDTH)
                 stdscr.addstr("МАРШРУТ".center(line_width))
-        except Exception as e:
+        except:
             pass
 
         try:
-            if stdscr.getmaxyx()[1] >= 70:
+            if stdscr.getmaxyx()[1] >= Application.SCREEN_WIDTH_NO_HOURS:
                 stdscr.move(current_line, stdscr.getmaxyx()[1] - 33)
                 stdscr.addstr("ЧАСЫ РАБОТЫ")
-        except Exception as e:
+        except:
             pass
 
         try:
-            if stdscr.getmaxyx()[1] >= 60:
+            if stdscr.getmaxyx()[1] >= Application.SCREEN_WIDTH_NO_FREQ_AND_HOURS:
                 stdscr.move(current_line, stdscr.getmaxyx()[1] - 20)
                 stdscr.addstr("ЧАСТОТА")
-        except Exception as e:
+        except:
             pass
 
         try:
             stdscr.move(current_line, stdscr.getmaxyx()[1] - 11)
             stdscr.addstr("БЛИЖАЙШИЕ")
-        except Exception as e:
+        except:
             pass
         current_line += 1
 
         return current_line
 
-    def generate_route_terminals_string(self, route):
+    @staticmethod
+    def generate_route_terminals_string(route):
+        """
+        Generate "route terminals" string, the one which will contain route start and end points.
+        This will check all EssentialStops and form a route name.
+        NOTE: A lot of EssentialStops in Yandex are kinda... broken, you can get a route like
+        "Останкино - Останкино", which is not circular.
+        :param route: route subset of original data JSON (single route)
+        :return: "route terminals" string
+        """
         route_terminals = ""
         try:
             essential_stops_len = len(route['EssentialStops'])
@@ -336,25 +452,42 @@ class Application:
                 route_terminals += route['EssentialStops'][j]['name'] + " - "
             route_terminals += route['EssentialStops'][essential_stops_len - 1]['name']
 
-        except Exception as e:
+        except:
             route_terminals = "???? - ????"
 
         return route_terminals
 
-    def generate_operating_hours_string(self, route):
+    @staticmethod
+    def generate_operating_hours_string(route):
+        """
+        Generate "operating hours" string
+        :param route subset of original data JSON (single route)
+        :return: "operating hours" string
+        """
         operating_hours = ""
         try:
-            operating_hours = route['BriefSchedule']['Frequency']['begin']['text'].rjust(5) + " - " + \
+            operating_hours = route['BriefSchedule']['Frequency']['begin']['text'].rjust(5) + \
+                              " - " + \
                               route['BriefSchedule']['Frequency']['end']['text'].ljust(5)
-        except Exception as e:
+        except:
             operating_hours = ""
 
         return operating_hours
 
-    def calculate_arrivals(self, route, yandex_timestamp):
+    @staticmethod
+    def calculate_arrivals(route, yandex_timestamp):
+        """
+        Calculate "arrivals" string, based on Yandex ETA prognosis.
+        Can be two types, "how many minutes left till next one" and
+        "when is next scheduled departure/arrival"
+        :param route: route subset of original data JSON (single route)
+        :param yandex_timestamp: timestamp from get_yandex_timestamp
+        :return: string containing nearest arrivals/schedules
+        """
         # If no Yandex Timestamp available, then exit
         if yandex_timestamp is None:
             return '', False
+
         is_now = False
         events_string = ""
         scheduled_string = ""
@@ -365,10 +498,12 @@ class Application:
                         try:
                             eta_stamp = float(vehicle['Estimated']['value'])
                             arrival_estimation = eta_stamp - yandex_timestamp
-                        except Exception as e:
+                        except:
                             arrival_estimation = None
 
                         if arrival_estimation is not None:
+                            # Mark the route as "now arriving" if less than 1.5 mins left till
+                            # closest arrival
                             if arrival_estimation < 90:
                                 is_now = True
                             if arrival_estimation < 0:
@@ -381,13 +516,22 @@ class Application:
                     elif 'Scheduled' in vehicle:
                         try:
                             scheduled_string += vehicle['Scheduled']['text'] + " "
-                        except Exception as e:
+                        except:
                             scheduled_string += "-" + " "
 
         return events_string + scheduled_string, is_now
 
     @staticmethod
     def draw_transport_symbol(stdscr, line_number, route, time_counter, is_now):
+        """
+        Draw transport symbol
+        :param stdscr: curses screen
+        :param line_number: current line number
+        :param route: route subset of Yandex JSON from getStopInfo
+        :param time_counter: current time counter
+        :param is_now: if true, the icon will "wobble" a little
+        :return: nothing
+        """
         if is_now:
             try:
                 stdscr.move(line_number, 0 + (time_counter % 2))
@@ -401,14 +545,21 @@ class Application:
 
         try:
             try:
-                stdscr.addstr(symbols[route['type']])
+                stdscr.addstr(SYMBOLS[route['type']])
             except:
-                stdscr.addstr(symbols['unknown'])
+                stdscr.addstr(SYMBOLS['unknown'])
         except:
             return
 
     def draw_route_name(self, stdscr, current_line, route, time_counter):
-        # Draw transport route name
+        """
+        Draw route name.  Will do "running line" if string is to big.
+        :param stdscr: curses screen
+        :param current_line: current line
+        :param route: route subset of Yandex JSON from getStopInfo
+        :param time_counter: current time counter
+        :return: nothing
+        """
         line_width = self.route_name_width(stdscr.getmaxyx()[1])
         route_name_len = len(route['name'])
 
@@ -427,16 +578,25 @@ class Application:
             return
 
     def draw_route_terminals(self, stdscr, current_line, route_terminals, time_counter):
-        # Draw route terminals
+        """
+        Draw route terminals. Will do "running line" if string is to big.
+        :param stdscr: curses screen
+        :param current_line: current line
+        :param route_terminals: string containing route terminals
+        :param time_counter: current time counter
+        :return: nothing
+        """
         line_width = self.route_terminals_width(stdscr.getmaxyx()[1])
         try:
-            stdscr.move(current_line, 14 + self.route_name_width(stdscr.getmaxyx()[1]) - Application.ROUTE_NAME_PREFERRED_WIDTH)
+            stdscr.move(current_line,
+                        14 + self.route_name_width(stdscr.getmaxyx()[1]) -
+                        Application.ROUTE_NAME_PREFERRED_WIDTH)
 
             str_len = len(route_terminals)
             if str_len < line_width:
                 try:
                     stdscr.addstr(route_terminals)
-                except Exception as e:
+                except:
                     pass
             else:
                 # Buffer for endless loop running line
@@ -446,37 +606,57 @@ class Application:
                 outstr = route_terminals[cntr:(cntr + line_width)] + route_terminals
                 try:
                     stdscr.addstr(outstr[0:line_width])
-                except Exception as e:
+                except:
                     pass
 
         except:
             pass
 
-
-    def draw_operating_hours(self, stdscr, current_line, operating_hours):
-        # Printing operating hours
+    @staticmethod
+    def draw_operating_hours(stdscr, current_line, operating_hours):
+        """
+        Draw operating hours
+        :param stdscr: curses screen
+        :param current_line: current line
+        :param operating_hours: string containing operating hours
+        :return: nothing
+        """
         try:
             stdscr.move(current_line, stdscr.getmaxyx()[1] - 34)
             try:
                 stdscr.addstr(operating_hours)
-            except Exception as e:
+            except:
                 pass
         except:
             pass
 
-
-    def draw_route_frequency(self, stdscr, current_line, route):
-        # Printing frequency
+    @staticmethod
+    def draw_route_frequency(stdscr, current_line, route):
+        """
+        Draw route frequency.
+        :param stdscr: curses screen
+        :param current_line: current line
+        :param route: route subset of Yandex JSON from getStopInfo
+        :return: nothing
+        """
         try:
             stdscr.move(current_line, stdscr.getmaxyx()[1] - 19)
             try:
                 stdscr.addstr(route['BriefSchedule']['Frequency']['text'])
-            except Exception as e:
+            except:
                 stdscr.addstr("")
         except:
             pass
 
-    def draw_arrivals(self, stdscr, current_line, route, arrivals):
+    @staticmethod
+    def draw_arrivals(stdscr, current_line, arrivals):
+        """
+        Draw route frequency.
+        :param stdscr: curses screen
+        :param current_line: current line
+        :param arrivals: string containing arrivals
+        :return: nothing
+        """
         try:
             stdscr.move(current_line, stdscr.getmaxyx()[1] - 11)
             estimated_arrival_time = (arrivals)[0:12].rsplit(' ', 1)[0]
@@ -484,7 +664,15 @@ class Application:
         except:
             pass
 
-    def draw_transport_data(self, stdscr, line_number, route, time_counter, yandex_timestamp):
+    def draw_transport_data(self, stdscr, line_number, route, time_counter):
+        """
+        Draw a line with route info
+        :param stdscr: curses screen
+        :param line_number: current line number
+        :param route: route subset of Yandex JSON from getStopInfo
+        :param time_counter: current time counter
+        :return: current line after printing
+        """
         current_line = line_number
 
         # Generate route terminals
@@ -509,23 +697,45 @@ class Application:
         if stdscr.getmaxyx()[1] >= 70:
             self.draw_operating_hours(stdscr, current_line, operating_hours)
         # Display arrivals
-        self.draw_arrivals(stdscr, current_line, route, arrivals)
+        self.draw_arrivals(stdscr, current_line, arrivals)
 
         current_line += 1
 
         return current_line
 
     @staticmethod
-    def park_cursor(stdscr):
-        height, width = stdscr.getmaxyx()
+    def display_error_message(stdscr, current_line, error_message):
+        """
+        Display message with error at the bottom of the screen
+        :param stdscr: curses screen
+        :param current_line: current line
+        :param error_message: error message
+        :return: nothing
+        """
         try:
-            stdscr.move(0, width - 1)
+            stdscr.move(stdscr.getmaxyx()[0]-2, 0)
+            stdscr.addstr(error_message)
+        except:
+            pass
+
+        return current_line + 1
+
+    @staticmethod
+    def park_cursor(stdscr):
+        """
+        Move cursor to upper right edge of the screen.
+        :param stdscr: curses screen
+        :return: nothing
+        """
+        try:
+            stdscr.move(0, stdscr.getmaxyx()[1] - 1)
         except:
             pass
 
     def main(self, stdscr):
         """
-        Wrapper function for curses, in case something here will fail here it will not break the terminal.
+        Wrapper function for curses, in case something here will fail here it will
+        not break the terminal.
         :return:
         """
         time_counter = 0
@@ -559,6 +769,10 @@ class Application:
             # Leave one empty line
             line_number += 1
 
+            # Displaying error message, if present
+            if self.display_error != "":
+                self.display_error_message(stdscr, line_number, self.display_error)
+
             # ---- Drawing body of the timetable
 
             # How many lines to skip
@@ -579,10 +793,15 @@ class Application:
                         continue
 
                     # Draw transport data line
-                    line_number = self.draw_transport_data(stdscr, line_number, route, time_counter, self.yandex_timestamp)
+                    line_number = self.draw_transport_data(stdscr,
+                                                           line_number,
+                                                           route,
+                                                           time_counter)
 
                 # Add an empty line between route type segments
                 line_number += 1
+
+            self.draw_footer(stdscr, line_number, self.source_url)
 
             # Move cursor to the upper right corner of the screen
             self.park_cursor(stdscr)
@@ -605,15 +824,92 @@ class Application:
 
         return 0
 
+    def parse_arguments(self):
+        """
+        Parses CLI arguments
+        :return: nothing
+        """
+        parser = argparse.ArgumentParser(description=
+                                         "Yandex Transport Timetable in your terminal.\n" +
+                                         "Requires UNICODE (UTF-8) support, plus launched and\n"
+                                         "accessible Yandex Transport Proxy server.\n"
+                                         "See: https://github.com/OwlSoul/YandexTransportProxy",
+                                         formatter_class=argparse.RawTextHelpFormatter)
+        parser.add_argument("-V", "--version", action="store_true", default=False,
+                            help="show version info")
+        parser.add_argument("source_url", default="", nargs='?',
+                            help="source URL, can be one of these: \n"
+                                 "  Yandex Maps URL, like \n"
+                                 "  https://yandex.ru/maps/?masstransit[stopId]=stop__9680781\n"
+                                 "  Yandex Stop ID, like stopid:stop__9680781\n"
+                                 "  Filename (mainly for debug), like data.json"
+                            )
+        parser.add_argument("--proxy-host", metavar="HOST", default=self.proxy_host,
+                            help="host of the Yandex Transport Proxy server,\n"
+                                 "default is " + str(self.proxy_host))
+        parser.add_argument("--proxy-port", metavar="PORT", default=self.proxy_port,
+                            help="port of the Yandex Transport Proxy server,\n"
+                                 "default is " + str(self.proxy_port))
+        parser.add_argument("--wait_time", metavar="TIME", default=self.wait_time,
+                            help="wait time in secs between queries, default is " +
+                            str(self.wait_time))
+        parser.add_argument("--timeout", metavar="TIME", default=self.timeout,
+                            help="timeout for waiting in secs , default is " + str(self.timeout))
+
+        args = parser.parse_args()
+        if args.version:
+            print(__version__)
+            sys.exit(0)
+
+        self.proxy_host = args.proxy_host
+        self.proxy_port = args.proxy_port
+        self.wait_time = args.wait_time
+        self.timeout = args.timeout
+
+        # Parsing the Source URL
+        if args.source_url.startswith("http://") or args.source_url.startswith("https://"):
+            self.source_url = args.source_url
+            self.data_source = self.DATA_SOURCE_API
+        elif args.source_url.startswith("stopid:"):
+            self.source_url = "https://yandex.ru/maps/?masstransit[stopId]="+args.source_url[7:]
+            print(self.source_url)
+            self.data_source = self.DATA_SOURCE_API
+        elif args.source_url:                         # if len(args.source_url) > 0
+            self.source_url = args.source_url
+            self.data_source = self.DATA_SOURCE_FILE
+        else:
+            print("No source URL, station id or filename provided!")
+            sys.exit(0)
+
+        print("Source URL:", self.source_url)
+
     def run(self):
-        executor_thread = ExecutorThread(self, self.proxy_host, self.proxy_port)
+        """
+        Run the main program
+        :return: nothing
+        """
+        # Setting SIGINT and SIGTERM handlers
+        signal.signal(signal.SIGINT, self.sigint_handler)
+        signal.signal(signal.SIGTERM, self.sigint_handler)
+
+        # Parsing CLI Arguments
+        self.parse_arguments()
+
+        # Launch separate thread for periodical polling of data from
+        # Yandex Transport Proxy
+
+        self.executor_thread = ExecutorThread(self, self.proxy_host, self.proxy_port)
         print("STARTING EXECUTOR THREAD...")
-        executor_thread.start()
+        self.executor_thread.start()
+
+        # Main wrapper function for curses window
         print("STARTING MAIN WINDOW...")
         wrapper(self.main)
-        print("MAIN WINDOW STOPPED, WAITING FOR EXECUTOR THREAD TO COMPLETE...")
-        executor_thread.join()
-        print("Terminated")
+
+        # Waiting for executor thread to complete
+        print("WAITING FOR EXECUTOR THREAD TO COMPLETE...")
+        self.executor_thread.join()
+        print("APPLICATION TERMINATED")
 
 if __name__ == '__main__':
     app = Application()
