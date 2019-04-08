@@ -53,7 +53,7 @@ Other command line arguments:
 _--proxy_host_ - host address of Yandex Transport Proxy, default is 127.0.0.1 \
 _--proxy_port_ - port of Yandex Transport Proxy, default is 25555 \
 _--wait_time_ - how often timetable will refresh its data, default is 60 seconds (each minute) \
-_--timeout_ - how long to wait for data query to complete, default is 60 seconds \
+_--timeout_ - how long to wait for data query to complete, default is 60 seconds
 
 Remember, Yandex Transport Proxy has its own timeout between queries, 5 seconds by default, that means Yandex Transport Proxy will request at most 12 queries in minute from Yandex servers (this is to prevent possible ban).
 
@@ -116,7 +116,7 @@ https://yandex.ru/maps/10758/himki/?ll=37.438354%2C55.891513&masstransit%5BstopI
 _--proxy_host_ - адрес сервера Yandex Transport Proxy, по умолчанию - 127.0.0.1 \
 _--proxy_port_ - порт сервера Yandex Transport Proxy, по умолчанию - 25555 \
 _--wait_time_ - как часто табло будет обновлять данные,  по умолчанию - 60 секунд (раз в минуту) \
-_--timeout_ - как долго ждать данных от сервера до наступления ошибки таймаута, по умолчанию - 60 секунд \
+_--timeout_ - как долго ждать данных от сервера до наступления ошибки таймаута, по умолчанию - 60 секунд
 
 Не забывайте, Yandex Transport Proxy имеет свой собственный таймаут между запросами, по умолчанию он равен 5 секундам, то есть сервер не выполнит за минуту больше чем 12 запроов к Яндексу (чтобы не злить его и не нарваться на потенциальный бан).
 
