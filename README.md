@@ -25,6 +25,13 @@ docker pull owlsoul/ytproxy:latest
 docker run -t -d --name ytproxy -p 25555:25555 owlsoul/ytproxy:latest
 ```
 
+Required additional python libraries:
+
+```
+pip3 install natsort
+pip3 install yandex_transport_webdriver_api
+```
+
 To run this timetable for your desired stop, you need to know its URL or stopId. Now, that,s pretty simple.
 Click on any (well, your desired) public transport stop on Yandex Maps. Chekc the URL your browser is displaying now. \
 For example, bus stop "Магазин Мелодия" (Melody Shop) in Химки (Khimki) city:
@@ -86,6 +93,13 @@ Remember, Yandex Transport Proxy has its own timeout between queries, 5 seconds 
 ```
 docker pull owlsoul/ytproxy:latest
 docker run -t -d --name ytproxy -p 25555:25555 owlsoul/ytproxy:latest
+```
+
+Необходимые для работы библиотеки python:
+
+```
+pip3 install natsort
+pip3 install yandex_transport_webdriver_api
 ```
 
 Для работы табло прибытия остановки нужно знать URL этой остановки или её stopId. Узнать его очень просто.
