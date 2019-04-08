@@ -86,10 +86,13 @@ class ExecutorThread(threading.Thread):
 
             # Storing data to file if log_dir was specified
             if self.parent.log_dir != '':
-                filename = self.parent.log_dir + '/' + str(datetime.datetime.now()) + '.json'
+                filename = self.parent.log_dir + '/' + \
+                           str(datetime.datetime.now()).replace(':', '_') + \
+                           '.json'
                 try:
                     f = open(filename, 'w', encoding='utf-8')
-                    f.write(json.dumps(json_data, indent=4, separators=(',', ': ')))
+                    f.write(json.dumps(json_data, ensure_ascii=False,
+                                       indent=4, separators=(',', ': ')))
                     f.close()
                 except Exception as e:
                     self.parent.display_error = str(e)
