@@ -61,6 +61,7 @@ _--proxy_host_ - host address of Yandex Transport Proxy, default is 127.0.0.1 \
 _--proxy_port_ - port of Yandex Transport Proxy, default is 25555 \
 _--wait_time_ - how often timetable will refresh its data, default is 60 seconds (each minute) \
 _--timeout_ - how long to wait for data query to complete, default is 60 seconds
+_--log_dir_ - if specified, each JSON from Yandex will be saved to requested folder, switched off by default
 
 Remember, Yandex Transport Proxy has its own timeout between queries, 5 seconds by default, that means Yandex Transport Proxy will request at most 12 queries in minute from Yandex servers (this is to prevent possible ban).
 
@@ -131,6 +132,7 @@ _--proxy_host_ - адрес сервера Yandex Transport Proxy, по умол
 _--proxy_port_ - порт сервера Yandex Transport Proxy, по умолчанию - 25555 \
 _--wait_time_ - как часто табло будет обновлять данные,  по умолчанию - 60 секунд (раз в минуту) \
 _--timeout_ - как долго ждать данных от сервера до наступления ошибки таймаута, по умолчанию - 60 секунд
+_--log_dir_ - если указан, каждый пришедший от Yandex JSON будет сохранен в запрошенную папку, отключен по умолчанию. 
 
 Не забывайте, Yandex Transport Proxy имеет свой собственный таймаут между запросами, по умолчанию он равен 5 секундам, то есть сервер не выполнит за минуту больше чем 12 запроов к Яндексу (чтобы не злить его и не нарваться на потенциальный бан).
 
