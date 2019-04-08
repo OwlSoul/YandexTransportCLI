@@ -137,9 +137,11 @@ _--timeout_ - как долго ждать данных от сервера до
 </details>
 
 ## License / Лицензия
-Исходный код распространяется под лицензией MIT, "как есть (as is)", автор ответственности за возможные проблемы при его использовании не несет (но будет глубоко расстроен).
 
-The code is distributed under MIT licence, AS IS, author do not bear any responsibility for possible problems with usage of this project (but he will be very sad).
+**EN:** The code is distributed under MIT licence, AS IS, author do not bear any responsibility for possible problems with usage of this project (but he will be very sad).
+
+**RU:** Исходный код распространяется под лицензией MIT, "как есть (as is)", автор ответственности за возможные проблемы при его использовании не несет (но будет глубоко расстроен).
+
 
 ## Credits / Зал славы
 __Project author:__ [Yury D.](https://github.com/OwlSoul) (TheOwlSoul@gmail.com) \
