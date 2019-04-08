@@ -82,7 +82,17 @@ class ExecutorThread(threading.Thread):
                     self.parent.display_error = str(e)
                     self.parent.data_collection_status = self.parent.DATA_COLLECTION_FAILED
 
-            self.parent.update_time = str(datetime.datetime.now().time().strftime("%H:%M:%S"))
+            self.parent.update_time = str(datetime.datetime.now().time().strftime('%H:%M:%S'))
+
+            # Storing data to file if log_dir was specified
+            if self.parent.log_dir != '':
+                filename = self.parent.log_dir + '/' + str(datetime.datetime.now()) + '.json'
+                try:
+                    f = open(filename, 'w', encoding='utf-8')
+                    f.write(json.dumps(json_data, indent=4, separators=(',', ': ')))
+                    f.close()
+                except Exception as e:
+                    self.parent.display_error = str(e)
 
             try:
                 self.parent.yandex_timestamp, _ = self.parent.get_yandex_timestamp(json_data)
@@ -162,6 +172,9 @@ class Application:
 
         # Error to display on screen
         self.display_error = ""
+
+        # Directory to store data from Yandex in JSON format
+        self.log_dir = ''
 
         # Executor thread
         self.executor_thread = None
@@ -855,6 +868,9 @@ class Application:
                             str(self.wait_time))
         parser.add_argument("--timeout", metavar="TIME", default=self.timeout,
                             help="timeout for waiting in secs , default is " + str(self.timeout))
+        parser.add_argument("--log_dir", metavar="DIR", default=self.log_dir,
+                            help="directory to store data from Yandex in JSON format, \n"
+                                 "omitted by default (no logs)")
 
         args = parser.parse_args()
         if args.version:
@@ -865,6 +881,7 @@ class Application:
         self.proxy_port = args.proxy_port
         self.wait_time = args.wait_time
         self.timeout = args.timeout
+        self.log_dir = args.log_dir
 
         # Parsing the Source URL
         if args.source_url.startswith("http://") or args.source_url.startswith("https://"):
