@@ -107,7 +107,7 @@ https://yandex.ru/maps/10758/himki/?ll=37.438354%2C55.891513&masstransit%5BstopI
 
 ```python3 ./timetable_cli.py datafile.json```
 
-## Command line arguments
+## Аргументы коммандной строки
 
 Табло требует один позиционный аргумент - источник данных (может быть полный URL остановки, ее stopId или имя файла).
 
