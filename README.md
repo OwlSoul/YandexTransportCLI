@@ -79,6 +79,11 @@ Remember, Yandex Transport Proxy has its own timeout between queries, 5 seconds 
 **Q**: Does it work for metro? \
 **A**: Also yes. But it's completely pointless in this case, it will only display "line name" and working hours.
 
+**Q**: The output is gibberish, Unicode Symbols are not printed.
+**A**: For being advertised as "Unicode-Friendly", working with Unicode in Python 3 is still a big pain in the rear sometimes.
+Make sure that your locales are correct here (use command `locale`), ensure it **does not contain** something like **LC_ALL="C"**, this might cause a lot of problems.
+
+
 </details>
 
 <details>
@@ -149,6 +154,9 @@ _--log_dir_ - если указан, каждый пришедший от Yandex
 
 **Q**: А для метро?? \
 **A**: Тоже да, хотя в данном случае оно ну абсолютно бесполезно. Покажет название линии и часы работы, и все.
+
+**Q**: Вывод на экран не работает, не печатаются символы Unicode.
+**A**: Несмотря на звявления "полной поддержки Unicode в Python3, работа с ним все еще иногда приличная "боль в районе спины". Убедитесь что с лоаклями точно все в порядке (команда `locale`), особенно что вывод **не содержит** чего-то вроде **LC_ALL=C**, последнее обычно служит причиной большинства проблем.
 
 </details>
 
