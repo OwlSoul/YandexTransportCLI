@@ -168,4 +168,4 @@ _--log_dir_ - если указан, каждый пришедший от Yandex
 
 
 ## Credits / Зал славы
-__Project author:__ [Yury D.](https://github.com/OwlSoul) (TheOwlSoul@gmail.com) \
+__Project author:__ [Yury D.](https://github.com/OwlSoul) (TheOwlSoul@gmail.com)
