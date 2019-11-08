@@ -1,6 +1,6 @@
 # YandexTransportCLI
 
-**Warning**: Яндекс опять поменял у себя структуру данных по транспорту. Бешеные ребята, меняют структуру JSON-ов и методов по первому же желанию. Сейчас эта штука очень плохо работает (только список маршрутов, и всё, даже без конечных остановок).
+**Warning**: Клиент временно не работает, Яндекс опять поменял у себя структуру данных по транспорту. Бешеные ребята, меняют структуру JSON-ов и методов по первому же желанию. Сейчас эта штука очень плохо работает (только список маршрутов, и всё, даже без конечных остановок). Список методов остался тот же, YandexTransportProxy и YandexTransportProxyWebdriverAPI-Python не пострадали.
 
 **EN:** Yandex Transport timetable for one public transit stop in the terminal. This simple app is a capabilities demonstration of
 [YandexTransportProxy](https://github.com/OwlSoul/YandexTransportProxy) and 
